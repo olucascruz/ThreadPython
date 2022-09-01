@@ -1,7 +1,6 @@
 import random
 import threading
 import time
-
 # Cada garfo é um semaforo
 
 garfo1 = threading.Semaphore()
@@ -16,23 +15,20 @@ class filosofo(threading.Thread):                           #Classe filosofo
         self.GarfoDireito = GarfoDireito
         self.GarfoEsquerdo = GarfoEsquerdo
         self.nome = nome
-
-    def Pensar(self):                                        #Função pensar
-        #O filosofo pensa por um tempo aleatorio
+    #Função pensar
+    def Pensar(self):                                        
+        #O filósofo pensa por um tempo aleatório-
         tempo_pensando = random.randint(1, 3)
         print(f'{self.nome} Pensando por {tempo_pensando} segundos ')
         time.sleep(tempo_pensando);
-
-    def Comer(self):                                          #Função comer
-        
+    #Função comer
+    def Comer(self):
         #Sinaliza está usando o garfo a direita
         print(f"{self.nome} pega o garfo direito ")             
         self.GarfoDireito.acquire()                        
         
-        
-        # Tenta usar o garfo a esquerda caso esteja ocupado 
-        # espera por 2 segundos caso não libere larga o 
-        # garfo direito
+        # Tenta usar o garfo a esquerda caso esteja ocupado  espera por 2 segundos 
+        # caso não libere larga o garfo direito
         print(f"{self.nome} Tenta pegar o garfo esquerdo ")
         tempo_esperando_liberar_garfo = 2
         pegar_garfo_esquerdo = self.GarfoEsquerdo.acquire(True,  tempo_esperando_liberar_garfo) 
@@ -41,22 +37,19 @@ class filosofo(threading.Thread):                           #Classe filosofo
             print(f"{self.nome} larga garfo direito ")
             self.GarfoDireito.release()
 
-
-        # Se consegue pegar os dois garfos come por um tempo 
-        # aleatorio
+        # Se consegue pegar os dois garfos come por um tempo aleatorio
         tempo_comendo = random.randint(1, 3)
         print(f"{self.nome} Comendo por {tempo_comendo} segundos ")
         time.sleep(tempo_comendo) 
         
         # Ao acabar de comer larga os garfos permitindo
-        # que os filosofos ao seu lado possam comer (usar os recursos)
+        # que os filósofos ao seu lado possam comer (usar os recursos)
         print(f"{self.nome} larga garfo direito ")
         self.GarfoDireito.release()
         
         print(f"{self.nome} larga garfo esquerdo ")
         self.GarfoEsquerdo.release()
-        
-        
+    #Função que mantém a rotina comer e pensar.           
     def run(self):
         #Alterna entre comer e pensar
         while True:
