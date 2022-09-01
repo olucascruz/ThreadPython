@@ -1,8 +1,10 @@
 import random
 import threading
 import time
-# Cada garfo é um semaforo
 
+#Código produzido por Lucas Cruz
+
+# Cada garfo é um semaforo
 garfo1 = threading.Semaphore()
 garfo2 = threading.Semaphore()
 garfo3 = threading.Semaphore()
